@@ -16,7 +16,7 @@
     copy:
       content: "Welcome to my web server"
       dest: /var/www/html/index.html
-  - name: Configure firewalld: open port 80
+  - name: Configure firewalld open port 80
     firewalld:
       service: http
       permanent: yes
