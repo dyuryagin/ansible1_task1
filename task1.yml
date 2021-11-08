@@ -6,18 +6,18 @@
   tasks:
   - name: Install httpd
     package:
-	  name: httpd
-	  state: present
+      name: httpd
+      state: present
   - name: Check service state
     service:
-	  name: httpd
-	  state: started
+      name: httpd
+      state: started
   - name: Create index.html
     copy:
-	  content: "Welcome to my web server”
-	  dest: /var/www/html/index.html
+      content: "Welcome to my web server"
+      dest: /var/www/html/index.html
   - name: Configure firewalld: open port 80
     firewalld:
-	  service: http
-	  permanent: yes
-	  state: enabled
+      service: http
+      permanent: yes
+      state: enabled
