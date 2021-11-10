@@ -1,6 +1,6 @@
 ---
 - name: Install and configure httpd
-  hosts: hosts
+  hosts: nodes
   remote_user: ansible
   
   tasks:
