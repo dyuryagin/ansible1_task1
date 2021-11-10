@@ -2,6 +2,7 @@
 - name: Install and configure httpd
   hosts: nodes
   remote_user: ansible
+  become: yes
   
   tasks:
   - name: Install httpd
