@@ -1,0 +1,34 @@
+---
+- name: Change boot options
+  hosts: nodes
+  remote_user: ansible
+  become: yes
+  
+  tasks:
+  - name: Check biosdevname=0 existence
+    shell: grep biosdevname=0 /etc/default/grub | wc -l
+    register: biosdevname
+
+  - name: Add biosdename=0 into config file
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_CMDLINE_LINUX="(.*)"'
+      line: 'GRUB_CMDLINE_LINUX="\1 biosdevname=0"'
+      backrefs: yes   
+    when: biosdevname.stdout == '0'
+
+  - name: Check net.ifnames=0 existence
+    shell: grep net.ifnames=0 /etc/default/grub | wc -l
+    register: netifnames
+
+  - name: Add net.ifnames=0 into config file
+    lineinfile:
+      path: /etc/default/grub
+      regexp: '^GRUB_CMDLINE_LINUX="(.*)"'
+      line: 'GRUB_CMDLINE_LINUX="\1 net.ifnames=0"'
+      backrefs: yes
+    when: netifnames.stdout == '0'
+
+  - name: Run grub2-makeconfig
+    shell: grub2-mkconfig
+    when: biosdevname.stdout == '0' or netifnames.stdout == '0' 

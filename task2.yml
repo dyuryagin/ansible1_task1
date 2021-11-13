@@ -1,0 +1,21 @@
+---
+- name: Install and configure httpd
+  hosts: nodes
+  remote_user: ansible
+  become: yes
+  
+  tasks:
+  - name: Remove httpd
+    package:
+      name: httpd
+      state: absent
+  - name: Remove index.html
+    file:
+      state: absent
+      path: /var/www/html/index.html
+  - name: Configure firewalld close port 80
+    firewalld:
+      service: http
+      permanent: yes
+      immediate: yes
+      state: disabled
